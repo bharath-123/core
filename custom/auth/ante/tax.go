@@ -5,13 +5,8 @@ import (
 
 	sdk "github.com/cosmos/cosmos-sdk/types"
 	sdkerrors "github.com/cosmos/cosmos-sdk/types/errors"
-	authz "github.com/cosmos/cosmos-sdk/x/authz"
-	banktypes "github.com/cosmos/cosmos-sdk/x/bank/types"
-
 	core "github.com/terra-money/core/types"
-	marketexported "github.com/terra-money/core/x/market/exported"
 	oracleexported "github.com/terra-money/core/x/oracle/exported"
-	wasmexported "github.com/terra-money/core/x/wasm/exported"
 )
 
 // MaxOracleMsgGasUsage is constant expected oracle msg gas cost
@@ -110,34 +105,34 @@ func EnsureSufficientMempoolFees(ctx sdk.Context, gas uint64, feeCoins sdk.Coins
 // FilterMsgAndComputeTax computes the stability tax on MsgSend and MsgMultiSend.
 func FilterMsgAndComputeTax(ctx sdk.Context, tk TreasuryKeeper, msgs ...sdk.Msg) sdk.Coins {
 	taxes := sdk.Coins{}
-	for _, msg := range msgs {
-		switch msg := msg.(type) {
-		case *banktypes.MsgSend:
-			taxes = taxes.Add(computeTax(ctx, tk, msg.Amount)...)
-
-		case *banktypes.MsgMultiSend:
-			for _, input := range msg.Inputs {
-				taxes = taxes.Add(computeTax(ctx, tk, input.Coins)...)
-			}
-
-		case *marketexported.MsgSwapSend:
-			taxes = taxes.Add(computeTax(ctx, tk, sdk.NewCoins(msg.OfferCoin))...)
-
-		case *wasmexported.MsgInstantiateContract:
-			taxes = taxes.Add(computeTax(ctx, tk, msg.InitCoins)...)
-
-		case *wasmexported.MsgExecuteContract:
-			taxes = taxes.Add(computeTax(ctx, tk, msg.Coins)...)
-
-		case *authz.MsgExec:
-			messages, err := msg.GetMessages()
-			if err != nil {
-				panic(err)
-			}
-
-			taxes = taxes.Add(FilterMsgAndComputeTax(ctx, tk, messages...)...)
-		}
-	}
+	//for _, msg := range msgs {
+	//	switch msg := msg.(type) {
+	//	case *banktypes.MsgSend:
+	//		taxes = taxes.Add(computeTax(ctx, tk, msg.Amount)...)
+	//
+	//	case *banktypes.MsgMultiSend:
+	//		for _, input := range msg.Inputs {
+	//			taxes = taxes.Add(computeTax(ctx, tk, input.Coins)...)
+	//		}
+	//
+	//	case *marketexported.MsgSwapSend:
+	//		taxes = taxes.Add(computeTax(ctx, tk, sdk.NewCoins(msg.OfferCoin))...)
+	//
+	//	case *wasmexported.MsgInstantiateContract:
+	//		taxes = taxes.Add(computeTax(ctx, tk, msg.InitCoins)...)
+	//
+	//	case *wasmexported.MsgExecuteContract:
+	//		taxes = taxes.Add(computeTax(ctx, tk, msg.Coins)...)
+	//
+	//	case *authz.MsgExec:
+	//		messages, err := msg.GetMessages()
+	//		if err != nil {
+	//			panic(err)
+	//		}
+	//
+	//		taxes = taxes.Add(FilterMsgAndComputeTax(ctx, tk, messages...)...)
+	//	}
+	//}
 
 	return taxes
 }

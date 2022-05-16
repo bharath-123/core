@@ -312,7 +312,6 @@ func CreateTestInput(t *testing.T) TestInput {
 		paramsKeeper.Subspace(types.ModuleName),
 		accountKeeper,
 		bankKeeper,
-		treasuryKeeper,
 		router,
 		querier,
 		types.DefaultFeatures,
