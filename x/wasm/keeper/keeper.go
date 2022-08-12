@@ -25,9 +25,9 @@ type Keeper struct {
 	cdc        codec.BinaryCodec
 	paramSpace paramstypes.Subspace
 
-	accountKeeper  types.AccountKeeper
-	bankKeeper     types.BankKeeper
-	treasuryKeeper types.TreasuryKeeper
+	accountKeeper types.AccountKeeper
+	bankKeeper    types.BankKeeper
+	//treasuryKeeper types.TreasuryKeeper
 
 	serviceRouter types.MsgServiceRouter
 	queryRouter   types.GRPCQueryRouter
@@ -48,7 +48,7 @@ func NewKeeper(
 	paramspace paramstypes.Subspace,
 	accountKeeper types.AccountKeeper,
 	bankKeeper types.BankKeeper,
-	treasuryKeeper types.TreasuryKeeper,
+	//treasuryKeeper types.TreasuryKeeper,
 	serviceRouter types.MsgServiceRouter,
 	queryRouter types.GRPCQueryRouter,
 	supportedFeatures string,
@@ -57,7 +57,9 @@ func NewKeeper(
 
 	// set KeyTable if it has not already been set
 	if !paramspace.HasKeyTable() {
+		fmt.Print("I don't have a key!")
 		paramspace = paramspace.WithKeyTable(types.ParamKeyTable())
+		fmt.Print(paramspace)
 	}
 
 	// prevent zero write vm cache
@@ -78,18 +80,18 @@ func NewKeeper(
 	}
 
 	return Keeper{
-		storeKey:       storeKey,
-		cdc:            cdc,
-		paramSpace:     paramspace,
-		wasmVM:         vm,
-		accountKeeper:  accountKeeper,
-		bankKeeper:     bankKeeper,
-		treasuryKeeper: treasuryKeeper,
-		serviceRouter:  serviceRouter,
-		queryRouter:    queryRouter,
-		wasmConfig:     wasmConfig,
-		msgParser:      types.NewWasmMsgParser(),
-		querier:        types.NewWasmQuerier(),
+		storeKey:      storeKey,
+		cdc:           cdc,
+		paramSpace:    paramspace,
+		wasmVM:        vm,
+		accountKeeper: accountKeeper,
+		bankKeeper:    bankKeeper,
+		//treasuryKeeper: treasuryKeeper,
+		serviceRouter: serviceRouter,
+		queryRouter:   queryRouter,
+		wasmConfig:    wasmConfig,
+		msgParser:     types.NewWasmMsgParser(),
+		querier:       types.NewWasmQuerier(),
 	}
 }
 

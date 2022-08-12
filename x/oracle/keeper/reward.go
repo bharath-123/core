@@ -45,7 +45,7 @@ func (k Keeper) RewardBallotWinners(
 	if ballotPowerSum == 0 {
 		return
 	}
-	
+
 	// The Reward distributionRatio = votePeriod/rewardDistributionWindow
 	distributionRatio := sdk.NewDec(votePeriod).QuoInt64(rewardDistributionWindow)
 

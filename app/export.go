@@ -11,8 +11,7 @@ import (
 	slashingtypes "github.com/cosmos/cosmos-sdk/x/slashing/types"
 	"github.com/cosmos/cosmos-sdk/x/staking"
 	stakingtypes "github.com/cosmos/cosmos-sdk/x/staking/types"
-
-	oracletypes "github.com/terra-money/core/x/oracle/types"
+	//oracletypes "github.com/terra-money/core/x/oracle/types"
 )
 
 // ExportAppStateAndValidators exports the state of the application for a genesis
@@ -196,28 +195,28 @@ func (app *TerraApp) prepForZeroHeightGenesis(ctx sdk.Context, jailAllowedAddrs 
 	/* Handle oracle state. */
 
 	// Clear all prices
-	app.OracleKeeper.IterateLunaExchangeRates(ctx, func(denom string, _ sdk.Dec) bool {
-		app.OracleKeeper.DeleteLunaExchangeRate(ctx, denom)
-		return false
-	})
-
-	app.OracleKeeper.IterateMissCounters(ctx, func(operator sdk.ValAddress, _ uint64) bool {
-		app.OracleKeeper.SetMissCounter(ctx, operator, 0)
-		return false
-	})
-
-	app.OracleKeeper.IterateAggregateExchangeRatePrevotes(ctx, func(voterAddr sdk.ValAddress, _ oracletypes.AggregateExchangeRatePrevote) (stop bool) {
-		app.OracleKeeper.DeleteAggregateExchangeRatePrevote(ctx, voterAddr)
-		return false
-	})
-
-	app.OracleKeeper.IterateAggregateExchangeRateVotes(ctx, func(voterAddr sdk.ValAddress, _ oracletypes.AggregateExchangeRateVote) bool {
-		app.OracleKeeper.DeleteAggregateExchangeRateVote(ctx, voterAddr)
-		return false
-	})
-
-	/* Handle market state. */
-
-	// clear all market pools
-	app.MarketKeeper.SetTerraPoolDelta(ctx, sdk.ZeroDec())
+	//app.OracleKeeper.IterateLunaExchangeRates(ctx, func(denom string, _ sdk.Dec) bool {
+	//	app.OracleKeeper.DeleteLunaExchangeRate(ctx, denom)
+	//	return false
+	//})
+	//
+	//app.OracleKeeper.IterateMissCounters(ctx, func(operator sdk.ValAddress, _ uint64) bool {
+	//	app.OracleKeeper.SetMissCounter(ctx, operator, 0)
+	//	return false
+	//})
+	//
+	//app.OracleKeeper.IterateAggregateExchangeRatePrevotes(ctx, func(voterAddr sdk.ValAddress, _ oracletypes.AggregateExchangeRatePrevote) (stop bool) {
+	//	app.OracleKeeper.DeleteAggregateExchangeRatePrevote(ctx, voterAddr)
+	//	return false
+	//})
+	//
+	//app.OracleKeeper.IterateAggregateExchangeRateVotes(ctx, func(voterAddr sdk.ValAddress, _ oracletypes.AggregateExchangeRateVote) bool {
+	//	app.OracleKeeper.DeleteAggregateExchangeRateVote(ctx, voterAddr)
+	//	return false
+	//})
+	//
+	///* Handle market state. */
+	//
+	//// clear all market pools
+	//app.MarketKeeper.SetTerraPoolDelta(ctx, sdk.ZeroDec())
 }

@@ -104,7 +104,7 @@ endif
 # The below include contains the tools and runsim targets.
 include contrib/devtools/Makefile
 
-all: tools install lint test
+all: tools install test
 
 build: go.sum
 ifeq ($(OS),Windows_NT)
